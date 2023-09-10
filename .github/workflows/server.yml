@@ -1,0 +1,37 @@
+name: Server Runs🔆
+
+on:
+    push:
+        branches: [main]
+    # 本番環境になったら外す
+    # schedule:
+    # - cron: '0 22 * * *'
+    # - cron: '0 1 * * *'
+    # - cron: '0 4 * * *'
+    # - cron: '0 6 * * *'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        env:
+            pass: ${{ secrets.pass }}
+            user: ${{ secrets.user }}
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Python🐍
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+
+                
+            - name: Install Library📦
+              run: |
+                pip install -r requirements.txt
+            
+            - name: Run🏃
+              run: |
+                git config user.name "actions-user"
+                git config user.email "65916846+actions-user@users.noreply.github.com"
+                python index.py
